@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login Form</h2>
+        <form id="signupForm" onsubmit="return validateSignup()">
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Enter Your Username">
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Enter Your Email">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="Confirm " placeholder="Enter Your Passwords">
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Your Password">
+            </div>
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+</body>
+<script>
+    function validateSignup() {
+    let isValid = true;
+
+ 
+    function displayError(fieldId, message) {
+        let field = document.getElementById(fieldId);
+        let error = document.createElement('div');
+        error.classList.add('error');
+        error.innerText = message;
+        field.parentElement.appendChild(error);
+    }
+
+    // Clear previous error messages
+    let errorElements = document.querySelectorAll('.error');
+    errorElements.forEach(el => el.remove());
+
+
+    let username = document.getElementById("username").value.trim();
+    if (username === "") {
+        displayError("username", "⚠ Username is required !");
+        isValid = false;
+    }
+
+    let email = document.getElementById("email").value;
+    const emailPattern = /^[a-zA-Z0-9._~]+@[a-zA-Z0-9._~]+\.[a-zA-Z]{2,6}$/;
+    if (email.trim() === '') {
+        displayError('email', '⚠ Email is required !');
+        isValid = false;
+    } else if (!emailPattern.test(email)) {
+        displayError('email', '⚠ Invalid email format !');
+        isValid = false;
+    }
+
+    let password = document.getElementById('password').value;
+    if (password.trim() === '') {
+        displayError('password', '⚠ Password is required !');
+        isValid = false;
+    } else if (password.length < 6) {
+        displayError('password', '⚠ Password must contain at least 6 characters !');
+        isValid = false;
+    }
+
+    let confirmPassword = document.getElementById('confirmPassword').value;
+    if (confirmPassword.trim() === '') {
+        displayError('confirmPassword', '⚠ Confirm Your Password !');
+        isValid = false;
+    } else if (confirmPassword !== password) {
+        displayError('confirmPassword', '⚠ Password did not match !');
+        isValid = false;
+    }
+
+    return isValid;
+}
+</script>
+</html>
